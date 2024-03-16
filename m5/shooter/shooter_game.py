@@ -12,6 +12,7 @@ mixer.music.play(-1)
 
 font.init()
 f1 = font.Font(None, 36) 
+f3 = font.Font(None, 36) 
 
 f2 = font.Font(None, 80) 
 
@@ -98,9 +99,6 @@ while game:
                 rocet.faer()
             if e.key == K_x:
                 pautha =  not pautha
-            
-#            if e.key == K_z:
-#                pautha = False
     if not pautha:
         
         if not finish:   
@@ -109,6 +107,8 @@ while game:
             window.blit(txt_lose, [0, 30])
             txt_ckor = f1.render("рахунок " +str(ckore), 1, [255,255,255])
             window.blit(txt_ckor, [0, 10])
+            txt_x = f3.render("пауза на x ", 1, [255,255,255])
+            window.blit(txt_x, [556, 5])
             sprite_lict = sprite.spritecollide(
                 rocet, enemys, False
             )
@@ -122,7 +122,7 @@ while game:
             if lose == 10 or sprite_lict:
                 finish = True
                 window.blit(txt_not_finish, [250, 200])
-            if ckore == 9:
+            if ckore == 29:
                 finish = True
                 window.blit(txt_finish, [250, 200])
             rocet.reset()
