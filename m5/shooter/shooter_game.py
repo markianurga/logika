@@ -30,6 +30,7 @@ window = display.set_mode([width, height])
 background = scale(load("m5/shooter/galaxy.jpg"), [width, height])
 game = True
 finish = False
+pautha = False
 fps = 60
 clock = time.Clock()
 
@@ -95,50 +96,57 @@ while game:
         if e.type == KEYDOWN:
             if e.key == K_SPACE:
                 rocet.faer()
+            if e.key == K_x:
+                pautha =  not pautha
             
-    if not finish:   
-        window.blit(background, [0, 0])
-        txt_lose = f1.render("пропушкно " +str(lose), 1, [255,255,255])
-        window.blit(txt_lose, [0, 30])
-        txt_ckor = f1.render("рахунок " +str(ckore), 1, [255,255,255])
-        window.blit(txt_ckor, [0, 10])
-        sprite_lict = sprite.spritecollide(
-            rocet, enemys, False
-        )
-        sprites_lict = sprite.groupcollide(
-            bullets, enemys, True, True
-        )
-        for s in sprites_lict:
-            ckore += 1
-            enemy = Enemy("m5/shooter/ufo.png", randint(0, 620), 0, 80, 50, randint(1, 5) )
-            enemys.add(enemy)
-        if lose == 10 or sprite_lict:
-            finish = True
-            window.blit(txt_not_finish, [250, 200])
-        if ckore == 9:
-            finish = True
-            window.blit(txt_finish, [250, 200])
-        rocet.reset()
-        rocet.update()
-        enemys.draw(window)
-        enemys.update()
-        bullets.draw(window)
-        bullets.update()
-    else: 
-        time.delay(3000)
-        enemys.empty()
-        bullets.empty()
-        enemy0 = Enemy("m5/shooter/ufo.png", randint(0, 620), 0, 80, 50, randint(1, 5) )
-        enemy1 = Enemy("m5/shooter/ufo.png", randint(0, 620), 0, 80, 50, randint(1, 5) )
-        enemy2 = Enemy("m5/shooter/ufo.png", randint(0, 620), 0, 80, 50, randint(1, 5) )
-        enemy3 = Enemy("m5/shooter/ufo.png", randint(0, 620), 0, 80, 50, randint(1, 5) )
-        enemy4 = Enemy("m5/shooter/ufo.png", randint(0, 620), 0, 80, 50, randint(1, 5) )
-        enemy5 = Enemy("m5/shooter/ufo.png", randint(0, 620), 0, 80, 50, randint(1, 5) )
-        enemys = sprite.Group(enemy0, enemy1, enemy2, enemy3)
-        finish = False
+#            if e.key == K_z:
+#                pautha = False
+    if not pautha:
         
-        lose = 0
-        ckore = 0
+        if not finish:   
+            window.blit(background, [0, 0])
+            txt_lose = f1.render("пропушкно " +str(lose), 1, [255,255,255])
+            window.blit(txt_lose, [0, 30])
+            txt_ckor = f1.render("рахунок " +str(ckore), 1, [255,255,255])
+            window.blit(txt_ckor, [0, 10])
+            sprite_lict = sprite.spritecollide(
+                rocet, enemys, False
+            )
+            sprites_lict = sprite.groupcollide(
+                bullets, enemys, True, True
+            )
+            for s in sprites_lict:
+                ckore += 1
+                enemy = Enemy("m5/shooter/ufo.png", randint(0, 620), 0, 80, 50, randint(1, 5) )
+                enemys.add(enemy)
+            if lose == 10 or sprite_lict:
+                finish = True
+                window.blit(txt_not_finish, [250, 200])
+            if ckore == 9:
+                finish = True
+                window.blit(txt_finish, [250, 200])
+            rocet.reset()
+            rocet.update()
+            enemys.draw(window)
+            enemys.update()
+            bullets.draw(window)
+            bullets.update()
+        else: 
+            time.delay(3000)
+            enemys.empty()
+            bullets.empty()
+            enemy0 = Enemy("m5/shooter/ufo.png", randint(0, 620), 0, 80, 50, randint(1, 5) )
+            enemy1 = Enemy("m5/shooter/ufo.png", randint(0, 620), 0, 80, 50, randint(1, 5) )
+            enemy2 = Enemy("m5/shooter/ufo.png", randint(0, 620), 0, 80, 50, randint(1, 5) )
+            enemy3 = Enemy("m5/shooter/ufo.png", randint(0, 620), 0, 80, 50, randint(1, 5) )
+            enemy4 = Enemy("m5/shooter/ufo.png", randint(0, 620), 0, 80, 50, randint(1, 5) )
+            enemy5 = Enemy("m5/shooter/ufo.png", randint(0, 620), 0, 80, 50, randint(1, 5) )
+            enemys = sprite.Group(enemy0, enemy1, enemy2, enemy3)
+            finish = False
+            
+            lose = 0
+            ckore = 0
+        
         
     display.update()
     clock.tick(fps)
