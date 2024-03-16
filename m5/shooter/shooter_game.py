@@ -15,6 +15,10 @@ f1 = font.Font(None, 36)
 
 f2 = font.Font(None, 80) 
 
+txt_finish = f2.render("виграв ", 1, [0, 199, 0])
+txt_not_finish = f2.render("програв ", 1, [255, 0, 0])
+
+        
 ckore = 0
 lose = 0
 
@@ -82,6 +86,8 @@ enemys = sprite.Group(enemy0, enemy1, enemy2, enemy3)
 
 bullets = sprite.Group()
 
+
+
 while game:
     for e in event.get():
         if e.type == QUIT:
@@ -96,13 +102,43 @@ while game:
         window.blit(txt_lose, [0, 30])
         txt_ckor = f1.render("рахунок " +str(ckore), 1, [255,255,255])
         window.blit(txt_ckor, [0, 10])
-        if lose == 3:
+        sprite_lict = sprite.spritecollide(
+            rocet, enemys, False
+        )
+        sprites_lict = sprite.groupcollide(
+            bullets, enemys, True, True
+        )
+        for s in sprites_lict:
+            ckore += 1
+            enemy = Enemy("m5/shooter/ufo.png", randint(0, 620), 0, 80, 50, randint(1, 5) )
+            enemys.add(enemy)
+        if lose == 10 or sprite_lict:
             finish = True
+            window.blit(txt_not_finish, [250, 200])
+        if ckore == 9:
+            finish = True
+            window.blit(txt_finish, [250, 200])
         rocet.reset()
         rocet.update()
         enemys.draw(window)
         enemys.update()
         bullets.draw(window)
         bullets.update()
+    else: 
+        time.delay(3000)
+        enemys.empty()
+        bullets.empty()
+        enemy0 = Enemy("m5/shooter/ufo.png", randint(0, 620), 0, 80, 50, randint(1, 5) )
+        enemy1 = Enemy("m5/shooter/ufo.png", randint(0, 620), 0, 80, 50, randint(1, 5) )
+        enemy2 = Enemy("m5/shooter/ufo.png", randint(0, 620), 0, 80, 50, randint(1, 5) )
+        enemy3 = Enemy("m5/shooter/ufo.png", randint(0, 620), 0, 80, 50, randint(1, 5) )
+        enemy4 = Enemy("m5/shooter/ufo.png", randint(0, 620), 0, 80, 50, randint(1, 5) )
+        enemy5 = Enemy("m5/shooter/ufo.png", randint(0, 620), 0, 80, 50, randint(1, 5) )
+        enemys = sprite.Group(enemy0, enemy1, enemy2, enemy3)
+        finish = False
+        
+        lose = 0
+        ckore = 0
+        
     display.update()
     clock.tick(fps)
